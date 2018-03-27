@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/fjudith/docker-thingsboard-demo.svg?branch=master)](https://travis-ci.org/fjudith/docker-thingsboard-demo)
 
 # ThingsBoard Demo
 
