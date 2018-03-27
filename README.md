@@ -20,12 +20,18 @@ The Dockerfile builds from the official Node.js image "amd64/node:latest" (see h
 
 ### Quick Start
 
+Create a device from the ThingsBoard dashboard and copy the access token from the `credential` panel.
+Run the following command with the appropriates host name and access token.
+
 ```bash
 docker container run --rm --name=tbdemo \
 -e THINGSBOARD_HOST='thingsboard.example.com' \
 -e DEVICE_ACCESS_TOKEN='v3ry1nS3cur3T0k3n' \
+-e FREQUENCY="100" \
 fjudith/thingsboard-demo
 ```
+
+Metrics will be shipped to ThingsBoard's MQTT listener every 100 milliseconds.
 
 ### Environment variables
 
