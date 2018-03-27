@@ -12,6 +12,10 @@ FIRMWARE_VERSION=${FIRMWARE_VERSION:-"$(uname -s)"}
 SERIAL_NUMBER=${SERIAL_NUMBER:-"$(uname -r)"}
 FREQUENCY=${FREQUENCY:-"1000"}
 VARIABILITY=${VARIABILITY:-"0.03"}
+MINIMUM_LATITUDE=${MINIMUM_LATITUDE:-'48.8534100'}
+MAXIMUM_LATITUDE=${MAXIMUM_LATITUDE:-'48.856438'}
+MINIMUM_LONGITUDE=${MINIMUM_LONGITUDE:-'2.3488000'}
+MAXIMUM_LONGITUDE=${MAXIMUM_LONGITUDE:-'2.352456'}
 
 cat << EOF > /usr/share/thingsboard/demo-tools.js
 var mqtt = require('mqtt');
@@ -19,12 +23,15 @@ var mqtt = require('mqtt');
 // Don't forget to update accessToken constant with your device access token
 const thingsboardHost = "${THINGSBOARD_HOST}";
 const accessToken = "${DEVICE_ACCESS_TOKEN}";
-const minTemperature = ${MINIMUM_TEMPERATURE}, maxTemperature = ${MAXIMUM_TEMPERATURE}, minHumidity = ${MINIMUM_TEMPERATURE}, maxHumidity = ${MAXIMUM_TEMPERATURE};
+const minTemperature = ${MINIMUM_TEMPERATURE}, maxTemperature = ${MAXIMUM_TEMPERATURE}, minHumidity = ${MINIMUM_HUMIDITY}, maxHumidity = ${MAXIMUM_HUMIDITY};
+const minLatitude = ${MINIMUM_LATITUDE}, maxLatitude = ${MAXIMUM_LATITUDE}, minLongitude = ${MINIMUM_LONGITUDE}, maxLongitude = ${MAXIMUM_LONGITUDE};
 
-// Initialization of temperature and humidity data with random values
+// Initialization of temperature, humidity, latitude and longitude data with random values
 var data = {
     temperature: minTemperature + (maxTemperature - minTemperature) * Math.random() ,
-    humidity: minHumidity + (maxHumidity - minHumidity) * Math.random()
+    humidity: minHumidity + (maxHumidity - minHumidity) * Math.random() ,
+    latitude: minLatitude + (maxLatitude - minLatitude) * Math.random() ,
+    longitude: minLongitude + (maxLongitude - minLongitude) * Math.random()
 };
 
 // Initialization of mqtt client using Thingsboard host and device access token
@@ -45,6 +52,8 @@ client.on('connect', function () {
 function publishTelemetry() {
     data.temperature = genNextValue(data.temperature, minTemperature, maxTemperature);
     data.humidity = genNextValue(data.humidity, minHumidity, maxHumidity);
+    data.latitude = genNextGPS(data.latitude, minLatitude, maxLatitude);
+    data.longitude = genNextGPS(data.longitude, minLongitude, maxLongitude);
     client.publish('v1/devices/me/telemetry', JSON.stringify(data));
 }
 
@@ -55,8 +64,25 @@ function genNextValue(prevValue, min, max) {
     return Math.round(value * 10) / 10;
 }
 
+// Generates new random GPS Coordinate
+function genNextGPS(prevValue, min, max) {
+    var value = prevValue + ((max - min) * (Math.random() - 0.5)) * ${VARIABILITY};
+    value = Math.max(min, Math.min(max, value));
+    var coordinate = ((value * 10) / 10);
+    // console.log((value.toPrecision(8) * 10) / 10);
+    return ((value.toPrecision(11) * 10) / 10);
+}
+
 //Catches ctrl+c event
 process.on('SIGINT', function () {
+    console.log();
+    console.log('Disconnecting...');
+    client.end();
+    console.log('Exited!');
+    process.exit(2);
+});
+
+process.on('SIGTERM', function () {
     console.log();
     console.log('Disconnecting...');
     client.end();

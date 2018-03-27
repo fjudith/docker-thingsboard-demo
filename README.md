@@ -43,6 +43,10 @@ Variable | Description | Default value
 **MAXIMUM_TEMPERATURE** | Simulated maximum temperature | `30`
 **MINIMUM_HUMIDITY** | Simulated minimum humidity | `12`
 **MAXIMUM_HUMIDITY** | Simulated maximum humidity | `90`
+**MINIMUM_LATITUDE** | Simulated minimum latitude | `48.8534100` (Paris)
+**MAXIMUM_LATITUDE** | Simulated maximum latitude | `48.856438` (Paris)
+**MINIMUM_LONGITUDE** | Simulated maximum longitude | `2.3488000` (Paris)
+**MAXIMUM_LONGITUDE** | Simulated maximum longitude | `2.352456` (Paris)
 **FIRMWARE_VERSION** | Custom firmware version | `$(uname -s)`
 **SERIAL_NUMBER** | Custom serial number | `$(uname -r)`
 **FREQUENCY** | Metrics publishing frequency in milliseconds | `1000` (1s)
