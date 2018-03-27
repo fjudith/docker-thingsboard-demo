@@ -19,6 +19,8 @@ before_install:
   # ThingsBoard Demo build
   - docker build -f Dockerfile -t $REPO:$COMMIT .
 
+script:
+  - docker images
 
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
