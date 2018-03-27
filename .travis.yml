@@ -19,6 +19,7 @@ before_install:
   # ThingsBoard Demo build
   - docker build -f Dockerfile -t $REPO:$COMMIT .
 
+
 after_success:
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker tag $REPO:$COMMIT $REPO:$TAG
