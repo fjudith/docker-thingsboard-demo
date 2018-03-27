@@ -11,6 +11,7 @@ MAXIMUM_HUMIDITY=${MAXIMUM_TEMPERATURE:-'90'}
 FIRMWARE_VERSION=${FIRMWARE_VERSION:-"$(uname -s)"}
 SERIAL_NUMBER=${SERIAL_NUMBER:-"$(uname -r)"}
 FREQUENCY=${FREQUENCY:-"1000"}
+VARIABILITY=${VARIABILITY:-"0.03"}
 
 cat << EOF > /usr/share/thingsboard/demo-tools.js
 var mqtt = require('mqtt');
@@ -49,7 +50,7 @@ function publishTelemetry() {
 
 // Generates new random value that is within 3% range from previous value
 function genNextValue(prevValue, min, max) {
-    var value = prevValue + ((max - min) * (Math.random() - 0.5)) * 0.03;
+    var value = prevValue + ((max - min) * (Math.random() - 0.5)) * ${VARIABILITY};
     value = Math.max(min, Math.min(max, value));
     return Math.round(value * 10) / 10;
 }

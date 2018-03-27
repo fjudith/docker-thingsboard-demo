@@ -45,7 +45,8 @@ Variable | Description | Default value
 **MAXIMUM_HUMIDITY** | Simulated maximum humidity | `90`
 **FIRMWARE_VERSION** | Custom firmware version | `$(uname -r)`
 **SERIAL_NUMBER** | Custom serial number | `$(uname -r)`
-**FREQUENCY** | Metrics publishing frequency in milliseconds | `1000`
+**FREQUENCY** | Metrics publishing frequency in milliseconds | `1000` (1s)
+**VARIABILITY** | Percent of randomization between min. and max | `0.03` (3%)
 
 ### Reference
 
