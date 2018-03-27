@@ -8,6 +8,9 @@ MINIMUM_TEMPERATURE=${MINIMUM_TEMPERATURE:-'17.5'}
 MAXIMUM_TEMPERATURE=${MAXIMUM_TEMPERATURE:-'30'}
 MINIMUM_HUMIDITY=${MINIMUM_TEMPERATURE:-'12'}
 MAXIMUM_HUMIDITY=${MAXIMUM_TEMPERATURE:-'90'}
+FIRMWARE_VERSION=${FIRMWARE_VERSION:-"$(uname -s)"}
+SERIAL_NUMBER=${SERIAL_NUMBER:-"$(uname -r)"}
+FREQUENCY=${FREQUENCY:-"1000"}
 
 cat << EOF > /usr/share/thingsboard/demo-tools.js
 var mqtt = require('mqtt');
@@ -31,10 +34,10 @@ var client  = mqtt.connect('mqtt://'+ thingsboardHost, { username: accessToken }
 client.on('connect', function () {
     console.log('Client connected!');
     // Uploads firmware version and serial number as device attributes using 'v1/devices/me/attributes' MQTT topic
-    client.publish('v1/devices/me/attributes', JSON.stringify({"firmware_version":"1.0.1", "serial_number":"SN-001"}));
+    client.publish('v1/devices/me/attributes', JSON.stringify({"firmware_version":"${FIRMWARE_VERSION}", "serial_number":"${SERIAL_NUMBER}"}));
     // Schedules telemetry data upload once per second
     console.log('Uploading temperature and humidity data once per second...');
-    setInterval(publishTelemetry, 1000);
+    setInterval(publishTelemetry, ${FREQUENCY});
 });
 
 // Uploads telemetry data using 'v1/devices/me/telemetry' MQTT topic

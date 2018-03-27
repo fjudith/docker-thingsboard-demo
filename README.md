@@ -37,6 +37,9 @@ Variable | Description | Default value
 **MAXIMUM_TEMPERATURE** | Simulated maximum temperature | `30`
 **MINIMUM_HUMIDITY** | Simulated minimum humidity | `12`
 **MAXIMUM_HUMIDITY** | Simulated maximum humidity | `90`
+**FIRMWARE_VERSION** | Custom firmware version | `$(uname -r)`
+**SERIAL_NUMBER** | Custom serial number | `$(uname -r)`
+**FREQUENCY** | Metrics publishing frequency in milliseconds | `1000`
 
 ### Reference
 
