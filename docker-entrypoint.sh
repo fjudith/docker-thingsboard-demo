@@ -36,7 +36,7 @@ client.on('connect', function () {
     // Uploads firmware version and serial number as device attributes using 'v1/devices/me/attributes' MQTT topic
     client.publish('v1/devices/me/attributes', JSON.stringify({"firmware_version":"${FIRMWARE_VERSION}", "serial_number":"${SERIAL_NUMBER}"}));
     // Schedules telemetry data upload once per second
-    console.log('Uploading temperature and humidity data once per second...');
+    console.log('Uploading temperature and humidity data every ${FREQUENCY} milliseconds ...');
     setInterval(publishTelemetry, ${FREQUENCY});
 });
 
