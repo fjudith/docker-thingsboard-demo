@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thingsboard-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thingsboard-demo
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: thingsboard-demo
+        tiers: simulator
+    spec:
+      containers:
+      - image: fjudith/thingsboard-demo
+        name: thingsboard-demo-0
+        env:
+        - name: THINGSBOARD_HOST
+          value: demo.thingsboard.io
+        - name: DEVICE_ACCESS_TOKEN
+          value: oneV3ry1ns3cur3T0k3n
+      - image: fjudith/thingsboard-demo
+        name: thingsboard-demo-1
+        env:
+        - name: THINGSBOARD_HOST
+          value: demo.thingsboard.io
+        - name: DEVICE_ACCESS_TOKEN
+          value: twoV3ry1ns3cur3T0k3n
+        - name: MAXIMUM_TEMPERATURE
+          value: "55"
+        - name: MAXIMUM_HUMIDITY
+          value: "90"
+      - image: fjudith/thingsboard-demo
+        name: thingsboard-demo-2
+        env:
+        - name: THINGSBOARD_HOST
+          value: demo.thingsboard.io
+        - name: DEVICE_ACCESS_TOKEN
+          value: threeV3ry1ns3cur3T0k3n
+        - name: MAXIMUM_TEMPERATURE
+          value: "25"
+        - name: MAXIMUM_HUMIDITY
+          value: "90"
+        - name: FREQUENCY
+          value: "100"
+      - image: fjudith/thingsboard-demo
+        name: thingsboard-demo-3
+        env:
+        - name: THINGSBOARD_HOST
+          value: demo.thingsboard.io
+        - name: DEVICE_ACCESS_TOKEN
+          value: fourV3ry1ns3cur3T0k3n
+        - name: MAXIMUM_TEMPERATURE
+          value: "70"
+        - name: MAXIMUM_HUMIDITY
+          value: "90"
+        - name: FREQUENCY
+          value: "3000"
+      - image: fjudith/thingsboard-demo
+        name: thingsboard-demo-4
+        env:
+        - name: THINGSBOARD_HOST
+          value: demo.thingsboard.io
+        - name: DEVICE_ACCESS_TOKEN
+          value: fiveV3ry1ns3cur3T0k3n
+        - name: MAXIMUM_TEMPERATURE
+          value: "70"
+        - name: MAXIMUM_HUMIDITY
+          value: "90"
+        - name: FREQUENCY
+          value: "3000"
